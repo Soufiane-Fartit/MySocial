@@ -99,7 +99,7 @@ jobs:
         echo deployment_exists : ${{ steps.DeployCheck.deployment_exists }}
     
     - name: New Deployment
-      if: !${{ steps.DeployCheck.deployment_exists }}
+      if: "!${{ steps.DeployCheck.deployment_exists }}"
       run: |
         echo deployment_exists : ${{ steps.DeployCheck.deployment_exists }}
 

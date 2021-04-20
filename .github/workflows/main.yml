@@ -88,28 +88,36 @@ jobs:
     - name: Check Previous Deployment
       id: DeployCheck
       run: |
-        echo ::set-output name=deployment_exists::$(aws ecs list-clusters | jq -r '.clusterArns[0]'==null)
+        matchs=$(aws ecs list-clusters | jq -r '.clusterArns' | grep -oP '(?<=\/)${{ secrets.APP_NAME }}(?=\")')
+        [ -z "$matchs" ] && deployment_exists=false || deployment_exists=true
+        echo deployment_exists : $deployment_exists
+        echo ::set-output name=deployment_exists::$deployment_exists
     
     - name: Update Deployment
       if: ${{ steps.DeployCheck.deployment_exists }}
       run: |
-        echo ${{ steps.DeployCheck.deployment_exists }}
-
-    - name: Deploy on ECS
+        echo deployment_exists : ${{ steps.DeployCheck.deployment_exists }}
+    
+    - name: New Deployment
+      if: ! ${{ steps.DeployCheck.deployment_exists }}
       run: |
-        aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 884275084301.dkr.ecr.eu-west-3.amazonaws.com
+        echo deployment_exists : ${{ steps.DeployCheck.deployment_exists }}
+
+    # - name: Deploy on ECS
+    #   run: |
+    #     aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 884275084301.dkr.ecr.eu-west-3.amazonaws.com
         
-        docker context create --help
+    #     docker context create --help
 
-        # cat .aws/credentials
-        docker context create ecs myecscontext --from-env
-        # docker context create ecs myecscontext --access-keys '.aws/credentials'
+    #     # cat .aws/credentials
+    #     docker context create ecs myecscontext --from-env
+    #     # docker context create ecs myecscontext --access-keys '.aws/credentials'
 
-        docker context use myecscontext
+    #     docker context use myecscontext
 
-        docker compose -f stack-deploy.yml up
+    #     docker compose -f stack-deploy.yml up
 
-        docker compose ps
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     docker compose ps
+    #   env:
+    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

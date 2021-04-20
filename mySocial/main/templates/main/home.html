@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+{% include 'header.html' %}
+
+
+{% block title %} Home {% endblock %} 
+
+{% block body %}
+
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/profile.css') }}">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div>
+    <div class="left-column" style="float:left;width:25%;margin-top:3%;"> 
+        <!--<a href="/profile/{{connected_user.id}}" class="btn btn-secondary f-s-12 rounded-corner" style="width:90%;margin-left:10%;margin-bottom:5%;background-color:#282726;"> {{connected_user.first_name}} {{connected_user.last_name}} </a>
+        <a href="/messages" class="btn btn-secondary f-s-12 rounded-corner" style="width:90%;margin-left:10%;margin-bottom:5%;background-color:#282726;"> messages </a>-->
+    </div>
+
+    <!--<div class="right-column" style="float:left;width:75%;margin-top:2%">-->
+    <div class="right-column" style="margin:auto auto;width:75%;margin-top:2%">  
+        <ul class="timeline">
+        {% if data.posts|length>0 %}
+        {% for post in data.posts %}
+            <!--
+            <div class="post-body" style="width:80%;background-color:lightgray;">
+                <div>
+                    <img src="{{post.user_image}}" style="height:50px" alt="user" class="profile-photo-lg">
+                </div>
+                <div>
+                    {{post.user_name}}
+                </div>
+                <div>
+                    {{post.text}}
+                </div>
+            </div>-->
+            
+            <li>
+                <!-- begin timeline-time -->
+                <div class="timeline-time">
+                    <span class="date">{{post.date}}</span>
+                    <span class="time">{{post.time}}</span>
+                </div>
+                <!-- end timeline-time -->
+                <!-- begin timeline-icon -->
+                <div class="timeline-icon">
+                    <a href="javascript:;">&nbsp;</a>
+                </div>
+                <!-- end timeline-icon -->
+                <!-- begin timeline-body -->
+                <div class="timeline-body">
+                    <div class="timeline-header">
+                        <script type=text/javascript>
+                            function deletePost(id) {
+                                console.log('deleting post ', id);
+                                $.post('/deletepost', {'post_id': id},function(data) {});
+                                location.reload();
+                            }
+                        </script>
+                        <span class="userimage"><img src="{{post.user_image}}" style="height:50px;" alt=""></span>
+                        <span class="username"><a href="javascript:;">{{post.user_name}}</a> <small></small></span>
+                        <span class="pull-right text-muted">
+                            {{post['total_views']}} Views 
+                            {% if id|string()==connected_id|string() %}
+                            <button onclick="deletePost({{post.id}})" class="pull-right btn btn-secondary btn-sm f-s-12 rounded-corner" style="margin-left:20px;" type="submit"> X </button>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="timeline-content">
+                        <p>
+                            {{post['text']}}
+                        </p>
+                    </div>
+                    <div class="timeline-likes">
+                        <div class="stats-right">
+                            <span class="stats-text">{{post['total_shares']}} Shares</span>
+                            <span class="stats-text">{{post['total_comments']}} Comments</span>
+                        </div>
+                        <div class="stats">
+                            {% for reaction in post.reactions %}
+                                {% if reaction=='heart'%}
+                                <span class="fa-stack fa-fw stats-icon">
+                                <i class="fa fa-circle fa-stack-2x text-danger"></i>
+                                <i class="fa fa-heart fa-stack-1x fa-inverse t-plus-1"></i>
+                                </span>
+                                {% elif reaction == 'like'%}
+                                <span class="fa-stack fa-fw stats-icon">
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <i class="fa fa-thumbs-up fa-stack-1x fa-inverse"></i>
+                                </span>
+                                {% endif %}
+                            {% endfor %}
+                                <span class="stats-total">{{post['total_likes']}}</span>
+                        </div>
+                    </div>
+                    <div class="timeline-footer">
+                        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"> </script>
+                        <script type=text/javascript>
+                            var requestSent = false;
+                            $(
+                                function() { 
+                                    $("#mybutton-{{post.id}}").click(function (event) { if(!requestSent) {
+                                                                requestSent = true;
+                                                                $.ajaxSetup({async: false}); 
+                                                                $.post('/like', {'post_id': {{post.id}}},function(data) {});
+                                                                requestSent = false;
+                                                                console.log('clicked');
+                                                                // change color of like button
+                                                                if ('{{post.is_liked_by_me}}'=='False') {
+                                                                    console.log('post.is_liked_by_me {{post.is_liked_by_me}}');
+                                                                }
+                                                                else {
+                                                                    console.log('post.is_liked_by_me {{post.is_liked_by_me}}');
+                                                                }
+                                                                location.reload();
+                                                                return false; 
+                                    }});
+                                }
+                                );
+                        </script>
+                        <script type=text/javascript>
+                            function showCommentField(id) {
+                                $.ajaxSetup({async: false}); 
+                                console.log('comment button clicked', id);
+                                var x = document.getElementById("comment-field-"+String(id));
+                                if (x.style.display === "none") {
+                                  x.style.display = "block";
+                                } else {
+                                  x.style.display = "none";
+                                }
+                              }
+                        </script>
+                        <script type=text/javascript>
+                            function sendComment(id) {
+                                var comment = $("#comment-"+String(id)).val();
+                                console.log('sending comment for ', id, '==>', comment);
+                                $.post('/comment', {'post_id': id, 'text': comment},function(data) {});
+                            }
+                        </script>
+                        <script type=text/javascript>
+                            function sharePost(id) {
+                                console.log('sharing post ', id);
+                                $.post('/sharepost', {'post_id': id},function(data) {});
+                            }
+                        </script>
+                        {% if id|string()!=connected_id|string() %}
+                            {% if post.is_liked_by_me==True %}
+                                <a href="javascript:;" id="mybutton-{{post.id}}" class="m-r-15 text-inverse-lighter" style="color:#10ccf4;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3" style="color:#10ccf4;"></i> Like</a>
+                            {% else %}
+                                <a href="javascript:;" id="mybutton-{{post.id}}" class="m-r-15 text-inverse-lighter" style="float:left;margin-left:30px;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a>
+                            {% endif %}
+                            <a href="javascript:;" onclick="showCommentField({{post.id}})" class="m-r-15 text-inverse-lighter" style="margin-left:30%;"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
+                            <a href="javascript:;" onclick="sharePost({{post.id}})" class="m-r-15 text-inverse-lighter" style="float:right;margin-right:30px;"><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a>
+                        {% else %}
+                            {% if post.is_liked_by_me==True %}
+                                <a href="javascript:;" id="mybutton-{{post.id}}" class="m-r-15 text-inverse-lighter" style="color:#10ccf4;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3" style="color:#10ccf4;"></i> Like</a>
+                            {% else %}
+                                <a href="javascript:;" id="mybutton-{{post.id}}" class="m-r-15 text-inverse-lighter" style="float:left;margin-left:20%;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a>
+                            {% endif %}
+                            <a href="javascript:;" onclick="showCommentField({{post.id}})" class="m-r-15 text-inverse-lighter" style="float:right;margin-right:20%;"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
+                        {% endif %}
+                    </div>
+                    <div>
+                        {% for comment in post.comments %}
+                        <div class="timeline-comment-box" style="width:100%;margin-left:0px;margin-top:10px;">
+                            <div class="user"><img src="{{comment.user_image}}"></div>
+                            <div style="margin-left: 50px;">
+                                <a href="/profile/{{comment.user_id}}" class="profile-link">{{comment.user_name+"  "}}</a>
+                                {{comment.text}}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="timeline-comment-box" id="comment-field-{{post.id}}" style="display:none;">
+                        <div class="user"><img src="{{post.user_image}}"></div>
+                        <div class="input">
+                            <form action="">
+                                <div class="input-group">
+                                    <input type="text" class="form-control rounded-corner" id="comment-{{post.id}}" placeholder="Write a comment...">
+                                    <span class="input-group-btn p-l-10">
+                                    <button class="btn btn-primary f-s-12 rounded-corner" onclick="sendComment({{post.id}})" type="submit">Comment</button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- end timeline-body -->
+            </li>
+
+            
+        {% endfor %}
+
+        {% else %}
+        
+        <li>
+           <div class="timeline-icon">
+              <a href="javascript:;">&nbsp;</a>
+           </div>
+
+           <div class="timeline-body">
+              Nothing Here today !! come back later maybe? or add new friends
+           </div>
+        </li>
+        {% endif %}
+        
+        <li>
+           <div class="timeline-icon">
+              <a href="javascript:;">&nbsp;</a>
+           </div>
+
+           <div class="timeline-body">
+              Loading...
+           </div>
+        </li>
+    </ul>
+    </div>
+</div>
+
+{% endblock %}

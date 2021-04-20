@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% include 'header.html' %}
+
+
+{% block title %} Home {% endblock %} 
+
+{% block body %}
+
+<h1 style="margin-bottom:60px;">Search Results for : {{searched_term}} </h1>
+
+
+<div class="tab-pane fade active show" id="profile-friends">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="people-nearby">
+
+                    {% for candidate_user in candidate_users %}
+
+                    <div class="nearby-user">
+                        <div class="row">
+                        <div class="col-md-2 col-sm-2">
+                            <img src="{{candidate_user.picture_path}}" style="height:8%" alt="user" class="profile-photo-lg">
+                        </div>
+                        <div class="col-md-7 col-sm-7">
+                            <h5><a href="/profile/{{candidate_user.id}}" class="profile-link">{{candidate_user.first_name}} {{candidate_user.last_name}}</a></h5>
+                            <p>{{candidate_user.city}}</p>
+                            <p class="text-muted">ID : {{candidate_user.id}}</p>
+                        </div>
+                        {% if not candidate_user.is_friend %}
+                        <script type=text/javascript>
+                            function addFriend(id) {
+                                $.ajaxSetup({async: false});
+                                console.log('adding friend ', id);
+                                $.post('/addfriend', {'user_id': id},function(data) {});
+                                location.reload();
+                            }
+                        </script>
+                        <div class="col-md-3 col-sm-3">
+                            <button onclick="addFriend({{candidate_user.id}})" class="btn btn-primary pull-right" type="submit">Add Friend</button>
+                        </div>
+                        {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

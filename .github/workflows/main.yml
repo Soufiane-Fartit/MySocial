@@ -1,0 +1,106 @@
+name: CD
+
+on:
+  push:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    if: ${{ true }}
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v1
+
+
+    - name: Create Application Config
+      run: |
+        touch mySocial/config.ini
+        
+        echo '[App]' >> mySocial/config.ini
+        echo 'dhsjnkezfnzejcnsiljcnzelkfmk' | awk '{print "secret_key : "$1}' >> mySocial/config.ini
+        echo 'False' | awk '{print "SQLALCHEMY_TRACK_MODIFICATIONS : "$1}' >> mySocial/config.ini
+        
+        echo $'\n' >> mySocial/config.ini 
+        
+        echo '[Database]' >> mySocial/config.ini 
+        echo '${{ secrets.DB_USER_ID }}' | awk '{print "USER_NAME : "$1}' >> mySocial/config.ini
+        echo '${{ secrets.DB_USER_KEY }}' | awk '{print "PASSWORD : "$1}' >> mySocial/config.ini
+        echo '${{ secrets.DB_ENDPOINT }}' | awk '{print "IP : "$1}' >> mySocial/config.ini
+        echo '${{ secrets.DB_NAME }}' | awk '{print "DB_NAME : "$1}' >> mySocial/config.ini
+        
+        cat mySocial/config.ini
+        ls
+        ls mySocial
+
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-3
+
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+
+    - name: Create ECR Repositories
+      run: |
+        aws ecr describe-repositories --repository-names ${{ secrets.APP_NAME }}_gunicorn || aws ecr create-repository --repository-name ${{ secrets.APP_NAME }}_gunicorn
+        aws ecr describe-repositories --repository-names ${{ secrets.APP_NAME }}_nginx || aws ecr create-repository --repository-name ${{ secrets.APP_NAME }}_nginx
+
+    - name: Delete CloudFormation Stack
+      run: |
+        aws cloudformation delete-stack --stack-name mysocial
+
+
+    - name: Read Repositories URIs
+      id: URIs
+      run: |
+        echo ::set-output name=gunicorn_uri::$(aws ecr describe-repositories --repository-names ${{ secrets.APP_NAME }}_gunicorn | jq -r '.repositories[0].repositoryUri')
+        echo ::set-output name=nginx_uri::$(aws ecr describe-repositories --repository-names ${{ secrets.APP_NAME }}_nginx | jq -r '.repositories[0].repositoryUri')
+    
+
+    - name: Install docker compose
+      run: |
+        curl -L https://raw.githubusercontent.com/docker/compose-cli/main/scripts/install/install_linux.sh | sh
+
+
+    - name: Build, tag, and push image to Amazon ECR
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: ${{ secrets.APP_NAME }}
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        docker-compose build
+        
+        docker tag ${{ secrets.APP_NAME }}_gunicorn:latest ${{ steps.URIs.outputs.gunicorn_uri }}:latest
+        docker tag ${{ secrets.APP_NAME }}_nginx:latest ${{ steps.URIs.outputs.nginx_uri }}:latest
+
+        docker push 884275084301.dkr.ecr.eu-west-3.amazonaws.com/${{ secrets.APP_NAME }}_gunicorn:latest
+        docker push 884275084301.dkr.ecr.eu-west-3.amazonaws.com/${{ secrets.APP_NAME }}_nginx:latest
+    
+
+    - name: Deploy on ECS
+      run: |
+        aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 884275084301.dkr.ecr.eu-west-3.amazonaws.com
+        
+        docker context create --help
+
+        # cat .aws/credentials
+        docker context create ecs myecscontext --from-env
+        # docker context create ecs myecscontext --access-keys '.aws/credentials'
+
+        docker context use myecscontext
+
+        docker compose -f stack-deploy.yml up
+
+        docker compose ps
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

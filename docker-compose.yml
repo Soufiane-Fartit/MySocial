@@ -1,0 +1,22 @@
+services:
+    gunicorn:
+        # container_name: gunicorn
+        build: ./
+        command: gunicorn -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker --workers 1 --bind 0.0.0.0:5000 wsgi:app
+        ports:
+            - 5000-5008:5000
+        networks:
+            - mysocial
+    nginx:
+        container_name: nginx
+        build: ./
+        command: nginx -g "daemon off;"
+        ports:
+            - 80:80
+        depends_on:
+            - gunicorn
+        networks:
+            - mysocial
+
+networks:
+    mysocial:

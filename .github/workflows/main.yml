@@ -89,17 +89,17 @@ jobs:
       id: DeployCheck
       run: |
         matchs=$(aws ecs list-clusters | jq -r '.clusterArns' | grep -oP '(?<=\/)${{ secrets.APP_NAME }}(?=\")')
-        [ -z "$matchs" ] && deployment_exists=false || deployment_exists=true
-        echo deployment_exists : $deployment_exists
-        echo ::set-output name=deployment_exists::$deployment_exists
+        [ -z "$matchs" ] && echo ::set-output name=deployment_exists::false || echo ::set-output name=deployment_exists::true
+        # echo deployment_exists : $deployment_exists
+        # echo ::set-output name=deployment_exists::$deployment_exists
     
     - name: Update Deployment
-      if: ${{ steps.DeployCheck.outputs.deployment_exists }}
+      if: true == ${{ steps.DeployCheck.outputs.deployment_exists }}
       run: |
         echo deployment_exists : ${{ steps.DeployCheck.outputs.deployment_exists }}
     
     - name: New Deployment
-      if: "!${{ steps.DeployCheck.outputs.deployment_exists }}"
+      if: false == ${{ steps.DeployCheck.outputs.deployment_exists }}
       run: |
         echo deployment_exists : ${{ steps.DeployCheck.outputs.deployment_exists }}
 

@@ -96,13 +96,13 @@ jobs:
     
     - name: Update Deployment
       continue-on-error: true
-      if: ${{ steps.DeployCheck.outputs.deployment_exists }}
+      if: ${{ true }} == ${{ steps.DeployCheck.outputs.deployment_exists }}
       run: |
         echo deployment_exists : ${{ steps.DeployCheck.outputs.deployment_exists }}
     
     - name: New Deployment
       continue-on-error: true
-      if: false == ${{ steps.DeployCheck.outputs.deployment_exists }}"
+      if: ${{ false }} == ${{ steps.DeployCheck.outputs.deployment_exists }}
       run: |
         echo deployment_exists : ${{ steps.DeployCheck.outputs.deployment_exists }}
 

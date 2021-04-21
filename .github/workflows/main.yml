@@ -120,3 +120,11 @@ jobs:
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: Remove Untagged Images fro AWS ECR
+      run: |
+        IMAGES_TO_DELETE=$( aws ecr list-images --repository-name ${{ secrets.APP_NAME }}_gunicorn --filter "tagStatus=UNTAGGED" --query 'imageIds[*]' --output json )
+        aws ecr batch-delete-image --repository-name ${{ secrets.APP_NAME }}_gunicorn --image-ids "$IMAGES_TO_DELETE" || true
+
+        IMAGES_TO_DELETE=$( aws ecr list-images --repository-name ${{ secrets.APP_NAME }}_nginx --filter "tagStatus=UNTAGGED" --query 'imageIds[*]' --output json )
+        aws ecr batch-delete-image --repository-name ${{ secrets.APP_NAME }}_nginx --image-ids "$IMAGES_TO_DELETE" || true

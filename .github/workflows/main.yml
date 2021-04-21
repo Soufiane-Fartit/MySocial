@@ -101,6 +101,7 @@ jobs:
         echo deployment_exists : ${{ steps.DeployCheck.outputs.deployment_exists }}
         echo Updating Deployment ...
         for var in `aws ecs list-services --cluster mysocial | jq -r '.serviceArns' | grep -oP '(?<=\/${{ secrets.APP_NAME }}\/).*?(?=\")'`; do echo $var; done;
+        for var in `aws ecs list-services --cluster mysocial | jq -r '.serviceArns' | grep -oP '(?<=\/${{ secrets.APP_NAME }}\/).*?(?=\")'`; do aws ecs update-service --cluster ${{ secrets.APP_NAME }} --service $var --force-new-deployment; done;
 
     
     - name: New Deployment on ECS

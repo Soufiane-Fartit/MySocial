@@ -89,19 +89,22 @@ jobs:
       id: DeployCheck
       run: |
         matchs=$(aws ecs list-clusters | jq -r '.clusterArns' | grep -oP '(?<=\/)${{ secrets.APP_NAME }}(?=\")')
-        [ -z "$matchs" ] && echo ::set-output name=deployment_exists::false || echo ::set-output name=deployment_exists::true
-        # echo deployment_exists : $deployment_exists
-        # echo ::set-output name=deployment_exists::$deployment_exists
+        [ -z "$matchs" ] && deploymentExists=false || deploymentExists=true
+        echo deployment_exists : $deploymentExists
+        echo ::set-output name=deployment_exists::$deploymentExists
+        echo ::set-output name=deployment_exists_alt::deploymentExists
     
     - name: Update Deployment
-      if: true == ${{ steps.DeployCheck.outputs.deployment_exists }}
+      if: ${{ steps.DeployCheck.outputs.deployment_exists }}
       run: |
         echo deployment_exists : ${{ steps.DeployCheck.outputs.deployment_exists }}
+        echo deployment_exists : ${{ steps.DeployCheck.outputs.deployment_exists_alt }}
     
     - name: New Deployment
-      if: false == ${{ steps.DeployCheck.outputs.deployment_exists }}
+      if: false == ${{ steps.DeployCheck.outputs.deployment_exists }}"
       run: |
         echo deployment_exists : ${{ steps.DeployCheck.outputs.deployment_exists }}
+        echo deployment_exists : ${{ steps.DeployCheck.outputs.deployment_exists_alt }}
 
     # - name: Deploy on ECS
     #   run: |

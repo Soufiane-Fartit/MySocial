@@ -31,10 +31,6 @@ jobs:
         echo '${{ secrets.DB_ENDPOINT }}' | awk '{print "IP : "$1}' >> mySocial/config.ini
         echo '${{ secrets.DB_NAME }}' | awk '{print "DB_NAME : "$1}' >> mySocial/config.ini
         
-        cat mySocial/config.ini
-        ls
-        ls mySocial
-
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -53,10 +49,6 @@ jobs:
       run: |
         aws ecr describe-repositories --repository-names ${{ secrets.APP_NAME }}_gunicorn || aws ecr create-repository --repository-name ${{ secrets.APP_NAME }}_gunicorn
         aws ecr describe-repositories --repository-names ${{ secrets.APP_NAME }}_nginx || aws ecr create-repository --repository-name ${{ secrets.APP_NAME }}_nginx
-
-    # - name: Delete CloudFormation Stack
-    #   run: |
-    #     aws cloudformation delete-stack --stack-name mysocial
 
 
     - name: Read Repositories URIs
@@ -85,6 +77,7 @@ jobs:
         docker push 884275084301.dkr.ecr.eu-west-3.amazonaws.com/${{ secrets.APP_NAME }}_gunicorn:latest
         docker push 884275084301.dkr.ecr.eu-west-3.amazonaws.com/${{ secrets.APP_NAME }}_nginx:latest
     
+
     - name: Check Previous Deployment
       id: DeployCheck
       continue-on-error: true
@@ -94,8 +87,8 @@ jobs:
         echo deployment_exists : $deployment_exists
         echo ::set-output name=deployment_exists::$deployment_exists
     
+
     - name: Update Deployment
-      continue-on-error: true
       if: ${{ steps.DeployCheck.outputs.deployment_exists }}
       run: |
         echo deployment_exists : ${{ steps.DeployCheck.outputs.deployment_exists }}
@@ -120,6 +113,7 @@ jobs:
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 
     - name: Remove Untagged Images fro AWS ECR
       run: |

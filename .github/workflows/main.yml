@@ -94,14 +94,14 @@ jobs:
         echo ::set-output name=deployment_exists::$deployment_exists
     
     - name: Update Deployment
-      if: ${{ steps.DeployCheck.deployment_exists }}
+      if: ${{ steps.DeployCheck.outputs.deployment_exists }}
       run: |
-        echo deployment_exists : ${{ steps.DeployCheck.deployment_exists }}
+        echo deployment_exists : ${{ steps.DeployCheck.outputs.deployment_exists }}
     
     - name: New Deployment
-      if: "!${{ steps.DeployCheck.deployment_exists }}"
+      if: "!${{ steps.DeployCheck.outputs.deployment_exists }}"
       run: |
-        echo deployment_exists : ${{ steps.DeployCheck.deployment_exists }}
+        echo deployment_exists : ${{ steps.DeployCheck.outputs.deployment_exists }}
 
     # - name: Deploy on ECS
     #   run: |

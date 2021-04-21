@@ -90,7 +90,7 @@ jobs:
       continue-on-error: true
       run: |
         matchs=$(aws ecs list-clusters | jq -r '.clusterArns' | grep -oP '(?<=\/)${{ secrets.APP_NAME }}(?=\")')
-        [ -z "$matchs" ] && deployment_exists=false || deployment_exists=true
+        [ -z "$matchs" ] && deployment_exists=false || deployment_exists=false
         echo deployment_exists : $deployment_exists
         echo ::set-output name=deployment_exists::$deployment_exists
     

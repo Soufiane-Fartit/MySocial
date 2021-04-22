@@ -21,5 +21,10 @@ RUN ln -s /etc/nginx/sites-available/nginx.conf /etc/nginx/sites-enabled
 # RUN ufw delete allow 5000
 # RUN ufw allow 'Nginx Full'
 
+RUN mkdir /etc/ssl/private
+RUN chmod 700 /etc/ssl/private
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj "/emailAddress=soufiane.fartit@gmail.com/C=FR/ST=GrandEst/L=Strasbourg/O=mySocial Inc/OU=DSI" -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
+RUN openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+
 # copy project
 COPY . /usr/src/app/

@@ -30,7 +30,7 @@ jobs:
         echo '${{ secrets.DB_USER_KEY }}' | awk '{print "PASSWORD : "$1}' >> mySocial/config.ini
         echo '${{ secrets.DB_ENDPOINT }}' | awk '{print "IP : "$1}' >> mySocial/config.ini
         echo '${{ secrets.DB_NAME }}' | awk '{print "DB_NAME : "$1}' >> mySocial/config.ini
-        
+
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1

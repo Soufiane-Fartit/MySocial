@@ -75,9 +75,26 @@
                   <!-- END profile-header-content -->
                   <!-- BEGIN profile-header-tab -->
                   <ul class="profile-header-tab nav nav-tabs">
-                     <li class="nav-item"><a href="#profile-post" class="nav-link active show" data-toggle="tab">POSTS</a></li>
-                     <li class="nav-item"><a href="#profile-about" class="nav-link" data-toggle="tab">ABOUT</a></li>
-                     <li class="nav-item"><a href="#profile-friends" class="nav-link" data-toggle="tab">FRIENDS</a></li>
+                    <script type=text/javascript>
+                        function showPost()  {
+                            $('#profile-post').css('display', 'block')
+                            $('#profile-about').css('display', 'none')
+                            $('#profile-friends').css('display', 'none')
+                        }
+                        function showAbout()  {
+                            $('#profile-post').css('display', 'none')
+                            $('#profile-about').css('display', 'block')
+                            $('#profile-friends').css('display', 'none')
+                        }
+                        function showFriends()  {
+                            $('#profile-post').css('display', 'none')
+                            $('#profile-about').css('display', 'none')
+                            $('#profile-friends').css('display', 'block')
+                        }
+                    </script>
+                     <li class="nav-item"><a href="#profile-post" onclick="showPost()" class="nav-link active show" data-toggle="tab">POSTS</a></li>
+                     <li class="nav-item"><a href="#profile-about" onclick="showAbout()" class="nav-link" data-toggle="tab">ABOUT</a></li>
+                     <li class="nav-item"><a href="#profile-friends" onclick="showFriends()" class="nav-link" data-toggle="tab">FRIENDS</a></li>
                   </ul>
                   <!-- END profile-header-tab -->
                </div>
@@ -288,7 +305,7 @@
                      </ul>
                      <!-- end timeline -->
                   </div>
-                  <div class="tab-pane fade active show" id="profile-about" aria-hidden="true">
+                  <div class="tab-pane fade active show" id="profile-about" style="display:none">
                     <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="row">
                             <div class="col-md-6">
@@ -353,7 +370,7 @@
                         border-radius: 50%;
                       }
                   </style>
-                  <div class="tab-pane fade active show" id="profile-friends" aria-hidden="true">
+                  <div class="tab-pane fade active show" id="profile-friends" style="display:none">
                     <div class="container">
                         <div class="row">
                             <div class="col-md-8">

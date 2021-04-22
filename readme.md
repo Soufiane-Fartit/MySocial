@@ -1,3 +1,6 @@
+![CD](https://github.com/Soufiane-Fartit/MySocial/workflows/CD/badge.svg)
+
+
 # MySocial
 
 A mini social network built using flask.

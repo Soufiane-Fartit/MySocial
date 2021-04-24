@@ -16,4 +16,7 @@ def text(message):
 @socketio.on('videocall', namespace='/videocall')
 def videocall(message):
     # print('sending videocall request')
-    emit('call', {'msg': {'user': {c.name: getattr(current_user, c.name) for c in current_user.__table__.columns}}}, broadcast=True, include_self=False)
+    emit('call', 
+        {'msg': {'user': {c.name: getattr(current_user, c.name) for c in current_user.__table__.columns}, 'convId':message['convId']}}, 
+        broadcast=True, 
+        include_self=False)

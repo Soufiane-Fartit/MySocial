@@ -6,54 +6,55 @@
 
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
 <!------ Include the above in your HEAD tag ---------->
 
 
 <!DOCTYPE html><html class=''>
-<head><script src='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js'></script><meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/emilcarlsson/pen/ZOQZaV?limit=all&page=74&q=contact+" />
-<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
+<head>
+	<script src='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js'></script><meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/emilcarlsson/pen/ZOQZaV?limit=all&page=74&q=contact+" />
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
 
-<script src="https://use.typekit.net/hoy3lrg.js"></script>
-<script>try{Typekit.load({ async: true });}catch(e){}</script>
-<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'><link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
-{% include 'messaging/conversationstyle.html' %}
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+	<script src="https://use.typekit.net/hoy3lrg.js"></script>
+	<script>try{Typekit.load({ async: true });}catch(e){}</script>
+	<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'><link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
+	{% include 'messaging/conversationstyle.html' %}
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
-<nav id="mysocial-navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/">MySocial</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/profile/{{connected_id}}">Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/messages">Messages</a>
-          </li>
-        </ul>
-        <form action="/search" class="d-flex" method="post">
-          <input class="form-control me-2" name="searched_term" id="searched_term" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-primary" type="submit">Search</button>
-        </form>
-        <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/logout">Logout</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-</nav>
+	<nav id="mysocial-navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container-fluid">
+		<a class="navbar-brand" href="/">MySocial</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			<li class="nav-item">
+				<a class="nav-link active" aria-current="page" href="/">Home</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link active" aria-current="page" href="/profile/{{connected_id}}">Profile</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link active" aria-current="page" href="/messages">Messages</a>
+			</li>
+			</ul>
+			<form action="/search" class="d-flex" method="post">
+			<input class="form-control me-2" name="searched_term" id="searched_term" type="search" placeholder="Search" aria-label="Search">
+			<button class="btn btn-outline-primary" type="submit">Search</button>
+			</form>
+			<ul class="navbar-nav mb-2 mb-lg-0">
+			<li class="nav-item">
+				<a class="nav-link active" aria-current="page" href="/logout">Logout</a>
+			</li>
+			</ul>
+		</div>
+		</div>
+	</nav>
+</head>
+<body>
 
-</head><body>
-
-	{% include 'messaging/videocallPopup.html' %}
+{% include 'messaging/videocallPopup.html' %}
 
 <div id="frame">
 	<div id="sidepanel">
@@ -134,130 +135,151 @@
     {% endif %}
 
 </div>
-<script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script><script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
+<!-- <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script> -->
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.min.js"></script>
 
 <script >
-var messages = document.getElementById('messages');
-var scrollheight = messages.scrollHeight;
-
-messages.scrollTo(0,scrollheight);
-
-$("#profile-img").click(function() {
-	$("#status-options").toggleClass("active");
-});
-
-$(".expand-button").click(function() {
-  $("#profile").toggleClass("expanded");
-	$("#contacts").toggleClass("expanded");
-});
-
-$("#status-options ul li").click(function() {
-	$("#profile-img").removeClass();
-	$("#status-online").removeClass("active");
-	$("#status-away").removeClass("active");
-	$("#status-busy").removeClass("active");
-	$("#status-offline").removeClass("active");
-	$(this).addClass("active");
-	
-	if($("#status-online").hasClass("active")) {
-		$("#profile-img").addClass("online");
-	} else if ($("#status-away").hasClass("active")) {
-		$("#profile-img").addClass("away");
-	} else if ($("#status-busy").hasClass("active")) {
-		$("#profile-img").addClass("busy");
-	} else if ($("#status-offline").hasClass("active")) {
-		$("#profile-img").addClass("offline");
-	} else {
-		$("#profile-img").removeClass();
-	};
-	
-	$("#status-options").removeClass("active");
-});
-
-function newMessage() {
-	message = $(".message-input input").val();
-	if($.trim(message) == '') {
-		return false;
-	}
-	$('<li class="sent"><img src="{{connected_user.picture_path}}" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
-	$('.message-input input').val(null);
-	$('.contact.active .preview').html('<span>You: </span>' + message);
 	var messages = document.getElementById('messages');
-	messages.scrollTo(0,scrollheight);
-    $.ajaxSetup({async: false});
-    console.log('sending new message ', message);
-    {% if current_conv_user %}
-    $.post('/newmesage', {'message': message, 'receiver_id':{{current_conv_user.id}}},function(data) {});
-	newMessageOnSocket(message);
-    {% endif %}
-};
+	try {
+		var scrollheight = messages.scrollHeight;
+		messages.scrollTo(0,scrollheight);
+	}
+	catch (error)
+	{};
+	
 
-var socket;
-socket = io.connect('http://' + document.domain + ':' + location.port + '/newmesagesocket');
-console.log('created socket', socket);
 
-function newMessageOnSocket(message) {
-	{% if current_conv_user %}
-	console.log('sending over socket');
-	socket.emit('message', {msg: message, receiver_id:{{current_conv_user.id}}});
-	{% endif %}
-};
+	$("#profile-img").click(function() {
+		$("#status-options").toggleClass("active");
+	});
 
-/*
-function updateMessagesSection()
-{
-    $( "#messages" ).load(window.location.href + " #messages", function() {
-		document.getElementById('messages').style.height=scrollheight ;
-		console.log('set height to', document.getElementById('messages').style.height);
+	$(".expand-button").click(function() {
+	$("#profile").toggleClass("expanded");
+		$("#contacts").toggleClass("expanded");
+	});
+
+	$("#status-options ul li").click(function() {
+		$("#profile-img").removeClass();
+		$("#status-online").removeClass("active");
+		$("#status-away").removeClass("active");
+		$("#status-busy").removeClass("active");
+		$("#status-offline").removeClass("active");
+		$(this).addClass("active");
+		
+		if($("#status-online").hasClass("active")) {
+			$("#profile-img").addClass("online");
+		} else if ($("#status-away").hasClass("active")) {
+			$("#profile-img").addClass("away");
+		} else if ($("#status-busy").hasClass("active")) {
+			$("#profile-img").addClass("busy");
+		} else if ($("#status-offline").hasClass("active")) {
+			$("#profile-img").addClass("offline");
+		} else {
+			$("#profile-img").removeClass();
+		};
+		
+		$("#status-options").removeClass("active");
+	});
+
+	function newMessage() {
+		message = $(".message-input input").val();
+		if($.trim(message) == '') {
+			return false;
+		}
+		$('<li class="sent"><img src="{{connected_user.picture_path}}" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
+		$('.message-input input').val(null);
+		$('.contact.active .preview').html('<span>You: </span>' + message);
+		var messages = document.getElementById('messages');
+		messages.scrollTo(0,scrollheight);
+		$.ajaxSetup({async: false});
+		console.log('sending new message ', message);
+		{% if current_conv_user %}
+		$.post('/newmesage', {'message': message, 'receiver_id':{{current_conv_user.id}}},function(data) {});
+		newMessageOnSocket(message);
+		{% endif %}
+	};
+
+	var socket;
+	socket = io.connect('http://' + document.domain + ':' + location.port + '/newmesagesocket');
+	console.log('created socket', socket);
+
+	function newMessageOnSocket(message) {
+		{% if current_conv_user %}
+		console.log('sending over socket');
+		socket.emit('message', {msg: message, receiver_id:{{current_conv_user.id}}});
+		{% endif %}
+	};
+
+	/*
+	function updateMessagesSection()
+	{
+		$( "#messages" ).load(window.location.href + " #messages", function() {
+			document.getElementById('messages').style.height=scrollheight ;
+			console.log('set height to', document.getElementById('messages').style.height);
+			document.getElementById('messages').scrollTo(0,scrollheight);
+			console.log('scrolling');
+		});
+		
+	};*/
+
+	socket.on('message', function(data) {
+		{% if current_conv_user %}
+
+		message = data.msg.text;
+		console.log('received message : ', message);
+		{% do conversation.append(message) %}
+
+		var new_message = '<li class="replies">' +
+					'<img src="{{current_conv_user.picture_path}}" alt="" />' +
+					'<p>' + message + '</p>' +
+				'</li>'
+		$('#messages_list').append(new_message);
 		document.getElementById('messages').scrollTo(0,scrollheight);
-		console.log('scrolling');
+		{% endif %}
+	});
+
+	var videocallSocket;
+	videocallSocket = io.connect('http://' + document.domain + ':' + location.port + '/videocall');
+	console.log('created socket', videocallSocket);
+
+	$('#videocall').click(function() {
+		console.log('sending call request !!');
+		videocallSocket.emit('videocall', {'msg': 'calling', 'convId':'{{conversastion_id}}'});
+	});
+
+	$('#acceptvideocall').click(function() {
+		console.log('accepting videocall');
+		var chatroomCallNumber = document.getElementById('chatroomCallNumber').innerHTML;
+		window.open("/videocallroom/"+chatroomCallNumber, '_blank').focus();
+		$('#videocallPopup').modal('hide');
 	});
 	
-};*/
+	$('#rejectvideocall').click(function() {
+		console.log('rejecting videocall');
+	});
 
-socket.on('message', function(data) {
-    {% if current_conv_user %}
 
-	message = data.msg.text;
-	console.log('received message : ', message);
-	{% do conversation.append(message) %}
+	videocallSocket.on('call', function(data) {
+		username = data.msg.user.first_name + " " + data.msg.user.last_name;
+		console.log('you have been called by ', username);
+		console.log('join chatroom N : ', data.msg.convId);
+		document.getElementById('callerName').innerHTML = username;
+		document.getElementById('chatroomCallNumber').innerHTML = data.msg.convId;
+		$('#videocallPopup').modal('show');
+	});
 
-	var new_message = '<li class="replies">' +
-				'<img src="{{current_conv_user.picture_path}}" alt="" />' +
-				'<p>' + message + '</p>' +
-			'</li>'
-	$('#messages_list').append(new_message);
-	document.getElementById('messages').scrollTo(0,scrollheight);
-	{% endif %}
-});
+	$('.submit').click(function() {
+	newMessage();
+	});
 
-var videocallSocket;
-videocallSocket = io.connect('http://' + document.domain + ':' + location.port + '/videocall');
-console.log('created socket', videocallSocket);
-
-$('#videocall').click(function() {
-	console.log('sending call request !!');
-	videocallSocket.emit('videocall', {'msg': 'calling'});
-});
-
-videocallSocket.on('call', function(data) {
-	username = data.msg.user.first_name + " " + data.msg.user.last_name;
-	console.log('you have been called by ', username);
-	$('#videocallPopup').modal('show');
-});
-
-$('.submit').click(function() {
-  newMessage();
-});
-
-$(window).on('keydown', function(e) {
-  if (e.which == 13) {
-    newMessage();
-    return false;
-  }
-});
-//# sourceURL=pen.js
+	$(window).on('keydown', function(e) {
+	if (e.which == 13) {
+		newMessage();
+		return false;
+	}
+	});
+	//# sourceURL=pen.js
 </script>
 
 </body></html>

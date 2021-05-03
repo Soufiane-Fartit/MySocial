@@ -201,7 +201,7 @@
 	};
 
 	var socket;
-	socket = io.connect('http://' + document.domain + ':' + location.port + '/newmesagesocket');
+	socket = io.connect('https://' + document.domain + ':' + location.port + '/newmesagesocket');
 	console.log('created socket', socket);
 
 	function newMessageOnSocket(message) {
@@ -240,7 +240,7 @@
 	});
 
 	var videocallSocket;
-	videocallSocket = io.connect('http://' + document.domain + ':' + location.port + '/videocall');
+	videocallSocket = io.connect('https://' + document.domain + ':' + location.port + '/videocall');
 	console.log('created socket', videocallSocket);
 
 	$('#videocall').click(function() {

@@ -2,20 +2,19 @@ services:
     gunicorn:
         # container_name: gunicorn
         build: ./
-        command: gunicorn --worker-class eventlet --certfile=/etc/ssl/certs/nginx-selfsigned.crt --keyfile=/etc/ssl/private/nginx-selfsigned.key --workers 1 --bind 0.0.0.0:443 wsgi:app
+        # command: gunicorn --worker-class eventlet --certfile=/etc/ssl/certs/nginx-selfsigned.crt --keyfile=/etc/ssl/private/nginx-selfsigned.key --workers 1 --bind 0.0.0.0:443 wsgi:app
+        command: gunicorn --worker-class eventlet --log-level debug --workers 1 --bind 0.0.0.0:5000 wsgi:app
         ports:
-            # - 5000:5000
-            - 443:443
+            - 5000:5000
         networks:
             - mysocial
     nginx:
         container_name: nginx
         build: ./
-        # command: nginx -g "daemon off;"
-        command: echo "Nginx disabled"
+        command: nginx -g "daemon off;"
         ports:
             - 80:80
-            # - 443:443
+            - 443:443
         depends_on:
             - gunicorn
         networks:

@@ -56,6 +56,6 @@ def create_app():
     from .searching.searching import searching as searching_blueprint
     app.register_blueprint(searching_blueprint)
 
-    socketio.init_app(app)
+    socketio.init_app(app, engineio_logger=True, cors_allowed_origins="*")
 
     return app

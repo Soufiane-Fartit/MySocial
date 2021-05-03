@@ -7,17 +7,6 @@ services:
             - 443:443
         networks:
             - mysocial
-    nginx:
-        image: 884275084301.dkr.ecr.eu-west-3.amazonaws.com/mysocial_nginx:latest
-        # command: nginx -g "daemon off;"
-        command: echo "Nginx disabled"
-        ports:
-            - 80:80
-            # - 443:443
-        depends_on:
-            - gunicorn
-        networks:
-            - mysocial
 
 networks:
     mysocial:

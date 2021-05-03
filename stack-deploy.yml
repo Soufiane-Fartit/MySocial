@@ -1,17 +1,19 @@
 services:
     gunicorn:
         image: 884275084301.dkr.ecr.eu-west-3.amazonaws.com/mysocial_gunicorn:latest
-        command: gunicorn --worker-class eventlet --workers 1 --bind 0.0.0.0:5000 wsgi:app
+        command: gunicorn --worker-class eventlet --certfile=/etc/ssl/certs/nginx-selfsigned.crt --keyfile=/etc/ssl/private/nginx-selfsigned.key --workers 1 --bind 0.0.0.0:443 wsgi:app
         ports:
-            - 5000:5000
+            # - 5000:5000
+            - 443:443
         networks:
             - mysocial
     nginx:
         image: 884275084301.dkr.ecr.eu-west-3.amazonaws.com/mysocial_nginx:latest
-        command: nginx -g "daemon off;"
+        # command: nginx -g "daemon off;"
+        command: echo "Nginx disabled"
         ports:
             - 80:80
-            - 443:443
+            # - 443:443
         depends_on:
             - gunicorn
         networks:

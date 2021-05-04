@@ -2,12 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
+  <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+  
   <style>
+    html, body {
+      background-color: #373737;
+      height: 100%;
+    }
+
     #video-grid {
       display: none;
-      grid-template-columns: repeat(auto-fill, 400px);
-      grid-auto-rows: 400px;
+      height: 100%;
+      position:relative;
     }
 
     video {
@@ -16,18 +22,42 @@
       transform: rotateY(180deg);
       -webkit-transform:rotateY(180deg);
     }
+
+    #remote-video {
+      height: 96%; 
+    }
+
+    #local-video {
+      height: 25%;
+      width: 25%;
+      position:absolute;
+      bottom:20px;
+      right:0;  
+    }
+
+    .iconify {
+      position:absolute;
+      bottom:20px;
+      right:50%;
+      background-color:red;
+      color:white;
+      width:52px;
+      height:52px;
+      border-radius:50%;
+      border:0 none;
+      padding:10px 12px;
+      cursor: pointer;
+    }
+
   </style>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script> -->
 </head>
 <body>
-  <h1>Video Chat</h1>
-
-  <!-- My Video and Remote Video from connection -->
   <div id="video-grid">
-    <video playsinline autoplay muted id="local-video"></video>
     <video playsinline autoplay id="remote-video"></video>
+    <video playsinline autoplay muted id="local-video"></video>
+    <span class="iconify" data-icon="mdi-phone-hangup" data-inline="false" onclick="window.open('', '_self', ''); window.close();"></span>
   </div>
 
 
@@ -41,7 +71,7 @@ const remoteVideo = document.getElementById('remote-video');
 navigator.mediaDevices.getUserMedia({ video: true, audio: true })
   .then(stream => {
     // Show My Video
-    videoGrid.style.display = 'grid';
+    videoGrid.style.display = 'block';
     localVideo.srcObject = stream;
 
     // Start a Peer Connection to Transmit Stream

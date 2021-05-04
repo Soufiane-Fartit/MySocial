@@ -14,37 +14,21 @@
         <a href="/messages" class="btn btn-secondary f-s-12 rounded-corner" style="width:90%;margin-left:10%;margin-bottom:5%;background-color:#282726;"> messages </a>-->
     </div>
 
-    <!--<div class="right-column" style="float:left;width:75%;margin-top:2%">-->
     <div class="right-column" style="margin:auto auto;width:75%;margin-top:2%">  
         <ul class="timeline">
         {% if data.posts|length>0 %}
         {% for post in data.posts %}
-            <!--
-            <div class="post-body" style="width:80%;background-color:lightgray;">
-                <div>
-                    <img src="{{post.user_image}}" style="height:50px" alt="user" class="profile-photo-lg">
-                </div>
-                <div>
-                    {{post.user_name}}
-                </div>
-                <div>
-                    {{post.text}}
-                </div>
-            </div>-->
             
             <li>
-                <!-- begin timeline-time -->
                 <div class="timeline-time">
                     <span class="date">{{post.date}}</span>
                     <span class="time">{{post.time}}</span>
                 </div>
-                <!-- end timeline-time -->
-                <!-- begin timeline-icon -->
+
                 <div class="timeline-icon">
                     <a href="javascript:;">&nbsp;</a>
                 </div>
-                <!-- end timeline-icon -->
-                <!-- begin timeline-body -->
+
                 <div class="timeline-body">
                     <div class="timeline-header">
                         <script type=text/javascript>
@@ -182,7 +166,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- end timeline-body -->
             </li>
 
             

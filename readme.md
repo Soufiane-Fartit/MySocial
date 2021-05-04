@@ -40,12 +40,10 @@ ___
 
 ## TODO
 
-<input type="checkbox" disabled /> fix nginx proxy for websockets
+<input type="checkbox" disabled /> detect remote webrtc connection closed
 
 ___
 
 ## Improvement ideas
 
-- using websockets for instant messaging
-
-- using webrtc for video chat
+None for the moment

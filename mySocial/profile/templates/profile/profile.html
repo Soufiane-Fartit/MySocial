@@ -2,7 +2,7 @@
 {% include 'header.html' %}
 
 
-{% block title %} Home {% endblock %} 
+{% block title %} MySocial - Profile {% endblock %} 
 
 {% block body %}
 
@@ -127,7 +127,7 @@
                                     <div class="input">
                                         <form action="">
                                             <div class="input-group">
-                                                <input type="text" placeholder="Write a new post..." id="new-post" style="width:85%;border:none;">
+                                                <input type="text" placeholder="       Write a new post..." id="new-post" style="width:85%;border:1px solid black;border-radius:20px;">
                                                 <span class="input-group-btn p-l-10">
                                                 <button class="btn btn-primary f-s-12 rounded-corner" onclick="sendNewPost()" style="margin-left:40%;" type="submit">Confirm</button>
                                                 </span>
@@ -165,7 +165,7 @@
                                         <span class="userimage"><img src="{{data.image}}" alt=""></span>
                                         <span class="username"><a href="javascript:;">{{data.infos['name']}}</a> <small></small></span>
                                         <span class="pull-right text-muted">
-                                            {{post['total_views']}} Views 
+                                            <!-- {{post['total_views']}} Views  -->
                                             {% if id|string()==connected_id|string() %}
                                             <button onclick="deletePost({{post.id}})" class="pull-right btn btn-secondary btn-sm f-s-12 rounded-corner" style="margin-left:20px;" type="submit"> X </button>
                                             {% endif %}
@@ -250,19 +250,19 @@
                                         </script>
                                         {% if id|string()!=connected_id|string() %}
                                             {% if post.is_liked_by_me==True %}
-                                                <a href="javascript:;" id="mybutton-{{post.id}}" class="m-r-15 text-inverse-lighter" style="color:#10ccf4;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3" style="color:#10ccf4;"></i> Like</a>
+                                                <a href="javascript:;" id="mybutton-{{post.id}}" class="m-r-15 text-inverse-lighter mainbuttons" style="color:#10ccf4;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3" style="color:#10ccf4;"></i> Like</a>
                                             {% else %}
-                                                <a href="javascript:;" id="mybutton-{{post.id}}" class="m-r-15 text-inverse-lighter" style="float:left;margin-left:30px;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a>
+                                                <a href="javascript:;" id="mybutton-{{post.id}}" class="m-r-15 text-inverse-lighter mainbuttons" style="float:left;margin-left:30px;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a>
                                             {% endif %}
-                                            <a href="javascript:;" onclick="showCommentField({{post.id}})" class="m-r-15 text-inverse-lighter" style="margin-left:30%;"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
-                                            <a href="javascript:;" onclick="sharePost({{post.id}})" class="m-r-15 text-inverse-lighter" style="float:right;margin-right:30px;"><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a>
+                                            <a href="javascript:;" onclick="showCommentField({{post.id}})" class="m-r-15 text-inverse-lighter mainbuttons" style="margin-left:30%;"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
+                                            <a href="javascript:;" onclick="sharePost({{post.id}})" class="m-r-15 text-inverse-lighter mainbuttons" style="float:right;margin-right:30px;"><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a>
                                         {% else %}
                                             {% if post.is_liked_by_me==True %}
-                                                <a href="javascript:;" id="mybutton-{{post.id}}" class="m-r-15 text-inverse-lighter" style="margin-left:20%;color:#10ccf4;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3" style="color:#10ccf4;"></i> Like</a>
+                                                <a href="javascript:;" id="mybutton-{{post.id}}" class="m-r-15 text-inverse-lighter mainbuttons" style="margin-left:20%;color:#10ccf4;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3" style="color:#10ccf4;"></i> Like</a>
                                             {% else %}
-                                                <a href="javascript:;" id="mybutton-{{post.id}}" class="m-r-15 text-inverse-lighter" style="margin-left:20%;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a>
+                                                <a href="javascript:;" id="mybutton-{{post.id}}" class="m-r-15 text-inverse-lighter mainbuttons" style="margin-left:20%;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a>
                                             {% endif %}
-                                            <a href="javascript:;" onclick="showCommentField({{post.id}})" class="m-r-15 text-inverse-lighter" style="float:right;margin-right:20%;"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
+                                            <a href="javascript:;" onclick="showCommentField({{post.id}})" class="m-r-15 text-inverse-lighter mainbuttons" style="float:right;margin-right:20%;"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
                                         {% endif %}
                                     </div>
                                     <div>

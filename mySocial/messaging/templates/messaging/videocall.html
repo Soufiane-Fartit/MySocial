@@ -171,6 +171,13 @@ const initConnection = (stream) => {
       remoteVideo.srcObject = stream;
     };
 
+    remoteConnection.oniceconnectionstatechange = function() {
+      if(remoteConnection.iceConnectionState == 'disconnected') {
+          console.log('Disconnected');
+          remoteVideo.srcObject = null;
+      }
+    };
+
     // Chanel Received
     remoteConnection.ondatachannel = ({ channel }) => {
       // Store Channel
@@ -207,5 +214,7 @@ const initConnection = (stream) => {
   });
 }
 </script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 </body>
 </html>
